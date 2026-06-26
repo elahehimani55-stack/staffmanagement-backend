@@ -108,14 +108,14 @@ export class UsersService {
     // پیام بات بفرست
     const message = `🔔 درخواست تأیید کاربر جدید
 
-  نام: ${newUser.firstName} ${newUser.lastName}
-  کد ملی: ${newUser.nationalCode}
-  کد پرسنلی: ${newUser.personnelCode}
-  سطح: ${newUser.level}
-  نقش: ${newUser.role ?? '—'}
+    نام: ${newUser.firstName} ${newUser.lastName}
+    کد ملی: ${newUser.nationalCode}
+    کد پرسنلی: ${newUser.personnelCode}
+    سطح: ${newUser.level}
+    نقش: ${newUser.role ?? '—'}
 
-  برای تأیید یا رد این کاربر به بخش «کاربران تحت نظارت» مراجعه کنید.
-  شناسه کاربر: ${newUser.id}`;
+    برای تأیید یا رد این کاربر به بخش «کاربران تحت نظارت» مراجعه کنید.
+    شناسه کاربر: ${newUser.id}`;
 
     await this.messagesRepo.save(
       this.messagesRepo.create({
@@ -248,11 +248,10 @@ async getPendingUsers() {
   }
 
 
-  async requestPhoneChange(user: User) {
+  async requestPhoneChange(user: User, newPhone: string) {
     const otp = this.otpService.generateCode();
     await this.otpService.saveOtp(`phone_change_${user.id}`, otp);
-    // در محیط واقعی SMS ارسال میشه
-    console.log(`OTP for phone change ${user.id}: ${otp}`);
+    console.log(`OTP for phone change ${user.id} to ${newPhone}: ${otp}`);
     return { message: 'کد تأیید ارسال شد' };
   }
 

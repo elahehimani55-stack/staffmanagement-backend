@@ -63,8 +63,8 @@ export class UsersController {
 
   @Post('change-phone/request')
   @UseGuards(JwtAuthGuard)
-  requestPhoneChange(@Req() req) {
-    return this.usersService.requestPhoneChange(req.user);
+    requestPhoneChange(@Req() req, @Body('phone') phone: string) {
+    return this.usersService.requestPhoneChange(req.user, phone);
   }
 
   @Post('change-phone/verify')

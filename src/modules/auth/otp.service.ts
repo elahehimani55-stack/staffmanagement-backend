@@ -7,9 +7,15 @@ export class OtpService {
   private redis: Redis;
 
   constructor(private config: ConfigService) {
+    const host = this.config.get<string>('REDIS_HOST') ?? 'localhost';
+    const port = parseInt(this.config.get<string>('REDIS_PORT') ?? '6379');
+    const password = this.config.get<string>('REDIS_PASSWORD');
+
     this.redis = new Redis({
-      host: this.config.get<string>('REDIS_HOST') ?? 'localhost',
-      port: parseInt(this.config.get<string>('REDIS_PORT') ?? '6379'),
+      host,
+      port,
+      password,
+      tls: password ? {} : undefined, // TLS فقط برای Upstash
     });
   }
 
